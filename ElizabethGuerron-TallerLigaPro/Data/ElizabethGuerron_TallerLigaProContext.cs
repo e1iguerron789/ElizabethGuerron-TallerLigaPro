@@ -15,5 +15,7 @@ namespace ElizabethGuerron_TallerLigaPro.Data
         }
 
         public DbSet<ElizabethGuerron_TallerLigaPro.Models.Jugador> Jugador { get; set; } = default!;
+        public DbSet<ElizabethGuerron_TallerLigaPro.Models.Equipo> Equipo { get; set; } = default!;
+        public DbSet<ElizabethGuerron_TallerLigaPro.Models.Estadio> Estadio { get; set; } = default!;
     }
 }
