@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-
-namespace ElizabethGuerron_TallerLigaPro.Models
+﻿namespace ElizabethGuerron_TallerLigaPro.Models
 {
     public class Estadio
     {
