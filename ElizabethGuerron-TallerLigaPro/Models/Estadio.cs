@@ -1,4 +1,8 @@
-﻿namespace ElizabethGuerron_TallerLigaPro.Models
+
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace ElizabethGuerron_TallerLigaPro.Models
 {
     public class Estadio
     {
@@ -9,6 +13,12 @@
         public string Direccion { get; set; }
         public string Ciudad { get; set; }
         public int Capacidad { get; set; }
+
+        public Equipo Equipo { get; set; }
+
+
+
+
 
 
 
