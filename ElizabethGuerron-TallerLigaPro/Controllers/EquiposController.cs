@@ -10,23 +10,23 @@ using ElizabethGuerron_TallerLigaPro.Models;
 
 namespace ElizabethGuerron_TallerLigaPro.Controllers
 {
-    public class EquipoesController : Controller
+    public class EquiposController : Controller
     {
         private readonly ElizabethGuerron_TallerLigaProContext _context;
 
-        public EquipoesController(ElizabethGuerron_TallerLigaProContext context)
+        public EquiposController(ElizabethGuerron_TallerLigaProContext context)
         {
             _context = context;
         }
 
-        // GET: Equipoes
+        // GET: Equipos
         public async Task<IActionResult> Index()
         {
             var elizabethGuerron_TallerLigaProContext = _context.Equipo.Include(e => e.estadio);
             return View(await elizabethGuerron_TallerLigaProContext.ToListAsync());
         }
 
-        // GET: Equipoes/Details/5
+        // GET: Equipos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,14 +45,14 @@ namespace ElizabethGuerron_TallerLigaPro.Controllers
             return View(equipo);
         }
 
-        // GET: Equipoes/Create
+        // GET: Equipos/Create
         public IActionResult Create()
         {
-            ViewData["IdEstadio"] = new SelectList(_context.Set<Estadio>(), "Id", "Id");
+            ViewData["IdEstadio"] = new SelectList(_context.Estadio, "Id", "Id");
             return View();
         }
 
-        // POST: Equipoes/Create
+        // POST: Equipos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -65,11 +65,11 @@ namespace ElizabethGuerron_TallerLigaPro.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEstadio"] = new SelectList(_context.Set<Estadio>(), "Id", "Id", equipo.IdEstadio);
+            ViewData["IdEstadio"] = new SelectList(_context.Estadio, "Id", "Id", equipo.IdEstadio);
             return View(equipo);
         }
 
-        // GET: Equipoes/Edit/5
+        // GET: Equipos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,11 +82,11 @@ namespace ElizabethGuerron_TallerLigaPro.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdEstadio"] = new SelectList(_context.Set<Estadio>(), "Id", "Id", equipo.IdEstadio);
+            ViewData["IdEstadio"] = new SelectList(_context.Estadio, "Id", "Id", equipo.IdEstadio);
             return View(equipo);
         }
 
-        // POST: Equipoes/Edit/5
+        // POST: Equipos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -118,11 +118,11 @@ namespace ElizabethGuerron_TallerLigaPro.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEstadio"] = new SelectList(_context.Set<Estadio>(), "Id", "Id", equipo.IdEstadio);
+            ViewData["IdEstadio"] = new SelectList(_context.Estadio, "Id", "Id", equipo.IdEstadio);
             return View(equipo);
         }
 
-        // GET: Equipoes/Delete/5
+        // GET: Equipos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -141,7 +141,7 @@ namespace ElizabethGuerron_TallerLigaPro.Controllers
             return View(equipo);
         }
 
-        // POST: Equipoes/Delete/5
+        // POST: Equipos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -10,22 +10,23 @@ using ElizabethGuerron_TallerLigaPro.Models;
 
 namespace ElizabethGuerron_TallerLigaPro.Controllers
 {
-    public class JugadorsController : Controller
+    public class JugadoresController : Controller
     {
         private readonly ElizabethGuerron_TallerLigaProContext _context;
 
-        public JugadorsController(ElizabethGuerron_TallerLigaProContext context)
+        public JugadoresController(ElizabethGuerron_TallerLigaProContext context)
         {
             _context = context;
         }
 
-        // GET: Jugadors
+        // GET: Jugadores
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Jugador.ToListAsync());
+            var elizabethGuerron_TallerLigaProContext = _context.Jugador.Include(j => j.Equipo);
+            return View(await elizabethGuerron_TallerLigaProContext.ToListAsync());
         }
 
-        // GET: Jugadors/Details/5
+        // GET: Jugadores/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,6 +35,7 @@ namespace ElizabethGuerron_TallerLigaPro.Controllers
             }
 
             var jugador = await _context.Jugador
+                .Include(j => j.Equipo)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (jugador == null)
             {
@@ -43,18 +45,19 @@ namespace ElizabethGuerron_TallerLigaPro.Controllers
             return View(jugador);
         }
 
-        // GET: Jugadors/Create
+        // GET: Jugadores/Create
         public IActionResult Create()
         {
+            ViewData["IdEquipo"] = new SelectList(_context.Equipo, "Id", "Id");
             return View();
         }
 
-        // POST: Jugadors/Create
+        // POST: Jugadores/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Posicion,Edad,Equipo,IdEquipo")] Jugador jugador)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Posicion,Edad,IdEquipo")] Jugador jugador)
         {
             if (ModelState.IsValid)
             {
@@ -62,10 +65,11 @@ namespace ElizabethGuerron_TallerLigaPro.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdEquipo"] = new SelectList(_context.Equipo, "Id", "Id", jugador.IdEquipo);
             return View(jugador);
         }
 
-        // GET: Jugadors/Edit/5
+        // GET: Jugadores/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,15 +82,16 @@ namespace ElizabethGuerron_TallerLigaPro.Controllers
             {
                 return NotFound();
             }
+            ViewData["IdEquipo"] = new SelectList(_context.Equipo, "Id", "Id", jugador.IdEquipo);
             return View(jugador);
         }
 
-        // POST: Jugadors/Edit/5
+        // POST: Jugadores/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Posicion,Edad,Equipo,IdEquipo")] Jugador jugador)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Posicion,Edad,IdEquipo")] Jugador jugador)
         {
             if (id != jugador.Id)
             {
@@ -113,10 +118,11 @@ namespace ElizabethGuerron_TallerLigaPro.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdEquipo"] = new SelectList(_context.Equipo, "Id", "Id", jugador.IdEquipo);
             return View(jugador);
         }
 
-        // GET: Jugadors/Delete/5
+        // GET: Jugadores/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,6 +131,7 @@ namespace ElizabethGuerron_TallerLigaPro.Controllers
             }
 
             var jugador = await _context.Jugador
+                .Include(j => j.Equipo)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (jugador == null)
             {
@@ -134,7 +141,7 @@ namespace ElizabethGuerron_TallerLigaPro.Controllers
             return View(jugador);
         }
 
-        // POST: Jugadors/Delete/5
+        // POST: Jugadores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
